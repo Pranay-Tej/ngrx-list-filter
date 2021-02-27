@@ -3,7 +3,12 @@
     <form [formGroup]="bookFilters">
       <mat-form-field appearance="outline" class="fullWidth">
         <mat-label>Search by book title</mat-label>
-        <input matInput placeholder="The Final Empire..." formControlName="title_contains">
+        <input
+          matInput
+          placeholder="The Final Empire..."
+          formControlName="title_contains"
+          id="bookTitleSearch"
+        />
         <mat-icon matPrefix>search</mat-icon>
       </mat-form-field>
     </form>
