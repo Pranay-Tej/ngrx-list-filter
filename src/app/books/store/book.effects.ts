@@ -4,7 +4,7 @@ import { bookActions } from './book.actions';
 import { BookService } from './../services/book.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, switchMap, tap } from 'rxjs/operators';
+import { mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class BookEffects {
         ]).pipe(
           switchMap(([filters, pagination]) =>
             this.bookService
-              .getAll()
+              .getAll(filters, pagination)
               .pipe(
                 switchMap((data) => [
                   bookActions.setBookList({ bookList: data }),
@@ -33,6 +33,20 @@ export class BookEffects {
               )
           )
         )
+      )
+    )
+  );
+
+  loadBookCount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(bookActions.loadBookCount),
+      withLatestFrom(this.bookFacade.bookFilters$),
+      mergeMap(([action, filterList]) =>
+        this.bookService
+          .getBookCount()
+          .pipe(
+            switchMap((data) => [bookActions.setBookCount({ bookCount: data })])
+          )
       )
     )
   );

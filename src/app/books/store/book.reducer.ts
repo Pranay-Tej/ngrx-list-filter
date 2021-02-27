@@ -1,7 +1,7 @@
 import { bookActions } from './book.actions';
 import { createReducer, on } from '@ngrx/store';
 
-export const bookFeature = 'book'
+export const bookFeature = 'book';
 export interface BookState {
   bookList: any[];
   bookCount: number;
@@ -26,5 +26,13 @@ export const bookReducer = createReducer(
   on(bookActions.setBookList, (state, { bookList }) => ({
     ...state,
     bookList: bookList,
+  })),
+  on(bookActions.setPagination, (state, { bookPagination }) => ({
+    ...state,
+    bookPagination: bookPagination,
+  })),
+  on(bookActions.setBookCount, (state, { bookCount }) => ({
+    ...state,
+    bookCount: bookCount,
   }))
 );

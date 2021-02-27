@@ -7,14 +7,21 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class BookFacade {
+  constructor(private store: Store) {}
+  bookList$ = this.store.select(bookSelectors.bookList);
+  bookFilters$ = this.store.select(bookSelectors.bookFilters);
+  bookPagination$ = this.store.select(bookSelectors.bookPagination);
+  bookCount$ = this.store.select(bookSelectors.bookCount);
 
-  constructor(private store:Store){}
-  bookList$ = this.store.select(bookSelectors.bookList)
-  bookFilters$ = this.store.select(bookSelectors.bookFilters)
-  bookPagination$ = this.store.select(bookSelectors.bookPagination)
-  bookCount$ = this.store.select(bookSelectors.bookCount)
+  loadBookCount() {
+    this.store.dispatch(bookActions.loadBookCount());
+  }
 
   loadBookList() {
-    this.store.dispatch(bookActions.loadBookList())
+    this.store.dispatch(bookActions.loadBookList());
+  }
+
+  setPagination(bookPagination) {
+    this.store.dispatch(bookActions.setPagination({bookPagination}));
   }
 }

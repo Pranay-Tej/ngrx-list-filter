@@ -8,14 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookListComponent implements OnInit {
   bookList$ = this.bookFacade.bookList$;
+  bookCount$ = this.bookFacade.bookCount$;
 
   constructor(private bookFacade: BookFacade) {}
 
   ngOnInit(): void {
+    this.bookFacade.loadBookCount();
     this.bookFacade.loadBookList();
   }
 
   setPagination(event) {
-    console.log(event);
+    // console.log(event);
+    this.bookFacade.setPagination({
+      _start: event.pageIndex + 1,
+      _limit: event.pageSize,
+    });
   }
 }

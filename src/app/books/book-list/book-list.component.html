@@ -14,9 +14,9 @@
   </div>
   <div class="pagination">
     <mat-paginator
-      [length]="5"
+      [length]="bookCount$ | async"
       [pageSize]="2"
-      [pageSizeOptions]="[2, 10, 25, 100]"
+      [pageSizeOptions]="[2, 5, 10, 50]"
       (page)="setPagination($event)"
     >
     </mat-paginator>
