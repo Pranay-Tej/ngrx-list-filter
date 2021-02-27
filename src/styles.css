@@ -20,6 +20,15 @@ body {
   color: var(--text-gray);
 }
 
+.fullWidth{
+  width: 100%;
+}
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .paper {
   background-color: hsl(0, 0%, 100%);
   border: 1px solid;
