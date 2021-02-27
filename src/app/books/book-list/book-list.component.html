@@ -16,6 +16,7 @@
     <mat-paginator
       [length]="bookCount$ | async"
       [pageSize]="bookPaginationInfo$._limit"
+      [pageIndex]="(bookPaginationInfo$._start)/bookPaginationInfo$._limit"
       [pageSizeOptions]="[5, 10, 50]"
       (page)="setPagination($event)"
     >
