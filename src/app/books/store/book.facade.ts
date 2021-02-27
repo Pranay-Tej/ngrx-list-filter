@@ -24,11 +24,15 @@ export class BookFacade {
   setFilters(bookFilters) {
     this.store.dispatch(bookActions.setFilters({ bookFilters }));
     this.store.dispatch(bookActions.resetPagination());
-
-    this.loadBookCount()
+    // explicit dispatches
+    this.loadBookCount();
+    this.loadBookList();
   }
 
   setPagination(bookPagination) {
     this.store.dispatch(bookActions.setPagination({ bookPagination }));
+    // explicit dispatches
+    this.loadBookCount();
+    this.loadBookList();
   }
 }
