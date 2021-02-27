@@ -9,16 +9,18 @@ export interface BookState {
   bookPagination: any;
 }
 
+const initialPagination = {
+  _start: 0,
+  _limit: 5,
+};
+
 const initialState: BookState = {
   bookList: [],
   bookCount: null,
   bookFilters: {
     title_contains: null,
   },
-  bookPagination: {
-    _start: 1,
-    _limit: 2,
-  },
+  bookPagination: initialPagination,
 };
 
 export const bookReducer = createReducer(
@@ -27,6 +29,10 @@ export const bookReducer = createReducer(
     ...state,
     bookList: bookList,
   })),
+  on(bookActions.setFilters, (state, { bookFilters }) => ({
+    ...state,
+    bookFilters: bookFilters,
+  })),
   on(bookActions.setPagination, (state, { bookPagination }) => ({
     ...state,
     bookPagination: bookPagination,
@@ -34,5 +40,9 @@ export const bookReducer = createReducer(
   on(bookActions.setBookCount, (state, { bookCount }) => ({
     ...state,
     bookCount: bookCount,
+  })),
+  on(bookActions.resetPagination, (state) => ({
+    ...state,
+    bookPagination: initialPagination,
   }))
 );

@@ -19,10 +19,13 @@ export class BookEffects {
     this.actions$.pipe(
       ofType(bookActions.loadBookList),
       mergeMap(() =>
-        combineLatest([
-          this.bookFacade.bookFilters$,
-          this.bookFacade.bookPagination$,
-        ]).pipe(
+      // combileLatest is being triggered without triggering loadBooList
+      // this is not the desired effect (need to change this)
+      combineLatest([
+        this.bookFacade.bookFilters$,
+        this.bookFacade.bookPagination$,
+      ]).pipe(
+          // tap(() => console.log('effect')),
           switchMap(([filters, pagination]) =>
             this.bookService
               .getAll(filters, pagination)
@@ -41,9 +44,9 @@ export class BookEffects {
     this.actions$.pipe(
       ofType(bookActions.loadBookCount),
       withLatestFrom(this.bookFacade.bookFilters$),
-      mergeMap(([action, filterList]) =>
+      mergeMap(([action, filter]) =>
         this.bookService
-          .getBookCount()
+          .getBookCount(filter)
           .pipe(
             switchMap((data) => [bookActions.setBookCount({ bookCount: data })])
           )

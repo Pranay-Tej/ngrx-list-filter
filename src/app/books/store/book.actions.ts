@@ -16,10 +16,16 @@ const setPagination = createAction(
   props<{ bookPagination }>()
 );
 
+const setFilters = createAction('[Book] Set Filters', props<{ bookFilters }>());
+
+const resetPagination = createAction('[Book] Reset Pagination');
+
 export const bookActions = {
   loadBookList,
   setBookList,
   loadBookCount,
   setBookCount,
-  setPagination
+  setPagination,
+  setFilters,
+  resetPagination,
 };

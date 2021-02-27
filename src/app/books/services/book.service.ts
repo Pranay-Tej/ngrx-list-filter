@@ -35,6 +35,7 @@ export class BookService {
   // service calls
 
   getAll(filters?, pagination?) {
+    // console.log('loading');
     return this.httpClient.get(
       `${this.getUrl()}?${filters ? this.getFilterQueryString(filters) : ''}${
         pagination ? this.getFilterQueryString(pagination) : ''
@@ -46,7 +47,11 @@ export class BookService {
     return this.httpClient.get(this.getUrlWithId(id));
   }
 
-  getBookCount() {
-    return this.httpClient.get(`${this.getUrl()}/count`);
+  getBookCount(filters?) {
+    return this.httpClient.get(
+      `${this.getUrl()}/count?${
+        filters ? this.getFilterQueryString(filters) : ''
+      }`
+    );
   }
 }
