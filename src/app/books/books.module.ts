@@ -1,3 +1,5 @@
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +10,8 @@ import { BooksRoutingModule } from './books-routing.module';
 import { BooksComponent } from './books.component';
 import { BookService } from './services/book.service';
 import { BookFacade } from './store/book.facade';
+import { bookFeature, bookReducer } from './store/book.reducer';
+import { BookEffects } from './store/book.effects';
 
 @NgModule({
   declarations: [BookFiltersComponent, BookListComponent, BooksComponent],
@@ -16,6 +20,8 @@ import { BookFacade } from './store/book.facade';
     BooksRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
+    StoreModule.forFeature(bookFeature, bookReducer),
+    EffectsModule.forFeature([BookEffects]),
   ],
   providers: [BookService, BookFacade],
 })
