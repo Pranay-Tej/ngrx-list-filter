@@ -2,17 +2,23 @@
   <div *ngIf="bookList$ | async; let bookList" class="bookList">
     <div *ngFor="let book of bookList" class="bookRow">
       <div class="bookTitle">
-        {{book.title}}
+        {{ book.title }}
       </div>
       <div class="text-gray">
-        {{book.author.name}}
+        {{ book.author.name }}
       </div>
       <div class="text-gray">
-        {{book.description}}
+        {{ book.description }}
       </div>
     </div>
   </div>
   <div class="pagination">
-    Pagination
+    <mat-paginator
+      [length]="5"
+      [pageSize]="2"
+      [pageSizeOptions]="[2, 10, 25, 100]"
+      (page)="setPagination($event)"
+    >
+    </mat-paginator>
   </div>
 </div>

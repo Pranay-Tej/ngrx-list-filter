@@ -14,4 +14,8 @@ export class BookListComponent implements OnInit {
   ngOnInit(): void {
     this.bookFacade.loadBookList();
   }
+
+  setPagination(event) {
+    console.log(event);
+  }
 }
