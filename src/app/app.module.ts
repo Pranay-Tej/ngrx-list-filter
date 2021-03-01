@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NavBarComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,

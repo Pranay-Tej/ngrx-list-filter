@@ -38,7 +38,7 @@ export class BookFiltersComponent implements OnInit, OnDestroy {
       .valueChanges.pipe(
         debounceTime(200),
         distinctUntilChanged(),
-        filter((val) => val !== ''),
+        // filter((val) => val !== ''),
         tap((val) => console.log(val)),
         tap(() => this.applyFilters())
       )
