@@ -1,9 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  tap,
+} from 'rxjs/operators';
 import { BookFacade } from './../store/book.facade';
-
 
 @Component({
   selector: 'app-book-filters',
@@ -28,34 +33,34 @@ export class BookFiltersComponent implements OnInit, OnDestroy {
       }
     );
 
-    // let searchByTitleSubscription$ = this.bookFilters
-    //   .get('title_contains')
-    //   .valueChanges.pipe(
-    //     distinctUntilChanged(),
-    //     filter((val) => val !== ''),
-    //     debounceTime(1200),
-    //     tap(() => this.applyFilters())
-    //   )
-    //   .subscribe((data) => console.log(data));
+    let searchByTitleSubscription$ = this.bookFilters
+      .get('title_contains')
+      .valueChanges.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        filter((val) => val !== ''),
+        tap((val) => console.log(val)),
+        tap(() => this.applyFilters())
+      )
+      .subscribe();
 
-    const searchTrigger$ = fromEvent(document.getElementById('bookTitleSearch'), 'keyup').pipe(
-      tap(val => console.log(val)),
-      // map(val => val.target.value),
-      // distinctUntilChanged(),
-      // filter((val) => val !== ''),
-      debounceTime(1200),
-      tap(() => this.applyFilters())
-    ).subscribe()
+    // const searchTrigger$ = fromEvent(document.getElementById('bookTitleSearch'), 'keyup').pipe(
+    //   debounceTime(200),
+    //   map((event: any) => event.target.value),
+    //   distinctUntilChanged(),
+    // filter((val) => val !== ''),
+    //   tap(val => console.log(val)),
+    //   tap(() => this.applyFilters())
+    // ).subscribe()
 
     this.subscriptions.add(bookFilterSubscription);
-    this.subscriptions.add(searchTrigger$);
-
-    // this.subscriptions.add(searchByTitleSubscription$);
+    // this.subscriptions.add(searchTrigger$);
+    this.subscriptions.add(searchByTitleSubscription$);
   }
 
   applyFilters() {
     // console.log(this.bookFilters.getRawValue());
-    this.bookFacade.setFilters(this.bookFilters.getRawValue())
+    this.bookFacade.setFilters(this.bookFilters.getRawValue());
   }
 
   ngOnDestroy() {
